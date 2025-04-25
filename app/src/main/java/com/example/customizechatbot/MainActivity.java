@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
 
     private static final String GEMINI_API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"; // Dùng gemini-pro cho chất lượng tốt hơn
-    private static final String TOM_PERSONA_PROMPT_PREFIX = "Bạn là Tom, một người bạn thân thiện, tích cực, luôn lắng nghe và đưa ra lời khuyên chân thành, đồng cảm. Hãy trả lời tin nhắn sau của người bạn thân với vai trò là Tom:\n\n";
+    private static final String TOM_PERSONA_PROMPT_PREFIX = "Bạn là Tom, một người bạn thân thiện, tích cực, luôn lắng nghe và đưa ra lời khuyên chân thành, đồng cảm. Hãy duy trì vai trò này trong suốt cuộc trò chuyện.\n\n";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        addBotMessage("Chào bạn! Mình là Tom đây. Hôm nay bạn thế nào?");
+        addBotMessage("Chào bạn!");
 
         btnSendMessage.setOnClickListener(v -> {
             String userMessageText = etMessageInput.getText().toString().trim();
@@ -94,15 +94,33 @@ public class MainActivity extends AppCompatActivity {
         try {
             JSONObject requestBody = new JSONObject();
             JSONArray contents = new JSONArray();
-            JSONObject content = new JSONObject();
-            JSONArray parts = new JSONArray();
-            JSONObject part = new JSONObject();
 
-            part.put("text", TOM_PERSONA_PROMPT_PREFIX + userMessage);
+            JSONObject personaPromptContent = new JSONObject();
+            personaPromptContent.put("role", "user");
+            JSONArray personaPromptParts = new JSONArray();
+            JSONObject personaPromptPart = new JSONObject();
+            personaPromptPart.put("text", TOM_PERSONA_PROMPT_PREFIX);
+            personaPromptParts.put(personaPromptPart);
+            personaPromptContent.put("parts", personaPromptParts);
+            contents.put(personaPromptContent);
 
-            parts.put(part);
-            content.put("parts", parts);
-            contents.put(content);
+            // Add message history
+            int maxHistory = 10;
+            int messageListSizeBeforeThinking = messageList.size() - 1;
+            int startIndex = Math.max(0, messageListSizeBeforeThinking - maxHistory);
+
+            for (int i = startIndex; i < messageListSizeBeforeThinking; i++) {
+                Message msg = messageList.get(i);
+                JSONObject messageContent = new JSONObject();
+                messageContent.put("role", msg.isUser() ? "user" : "model");
+                JSONArray messageParts = new JSONArray();
+                JSONObject messagePart = new JSONObject();
+                messagePart.put("text", msg.getContent());
+                messageParts.put(messagePart);
+                messageContent.put("parts", messageParts);
+                contents.put(messageContent);
+            }
+
             requestBody.put("contents", contents);
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, fullApiUrl, requestBody,
@@ -114,15 +132,15 @@ public class MainActivity extends AppCompatActivity {
                                     .getJSONArray("parts").getJSONObject(0).getString("text");
                             addBotMessage(botResponse.trim());
                         } catch (Exception e) {
-                            handleApiError("Error: " + e.getMessage());
+                            handleApiError("Error parsing response: " + e.getMessage());
                         }
                     },
                     error -> {
                         removeLastBotMessage();
-                        handleApiError("Error: " + getVolleyError(error));
+                        handleApiError("API Error: " + getVolleyError(error));
                     }) {
                 @Override
-                public Map<String, String> getHeaders() {
+                public Map<String, String> getHeaders() { // Override getHeaders
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Content-Type", "application/json");
                     return headers;
