@@ -14,7 +14,7 @@ This project was built as a basic example of how to integrate the Gemini API int
 ## Screenshots 
 
 ![startScreen](docs/images/img.png)
- ![chatScreen](docs/images/img_2.png)
+ ![chatScreen](docs/images/img_1.png)
 
 ## Installation and Setup
 
