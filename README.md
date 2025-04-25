@@ -16,15 +16,6 @@ This project was built as a basic example of how to integrate the Gemini API int
 ![startScreen](docs/images/img.png)
  ![chatScreen](docs/images/img_1.png)
 
-## Prerequisites
-
-To build and run this project, you need:
-
-1.  **Android Studio:** The latest version is recommended (e.g., Iguana or newer).
-2.  **Java Development Kit (JDK):** Version 17 or newer is recommended.
-3.  **Google Gemini API Key:** You need an API Key from Google AI Studio or Google Cloud Console. Visit [https://aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey) to create a key if you don't have one.
-4.  **Android Device or Emulator:** To run the application.
-
 ## Installation and Setup
 
 1.  **Clone the Repository:**
