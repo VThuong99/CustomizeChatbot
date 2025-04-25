@@ -29,8 +29,8 @@ To build and run this project, you need:
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [Your Repository URL]
-    cd [Your Project Directory Name]
+    git clone [[Your Repository URL]](https://github.com/VThuong99/CustomizeChatbot)
+    cd CustomizeChatbot
     ```
 
 2.  **Open the project in Android Studio:**
