@@ -29,7 +29,7 @@ To build and run this project, you need:
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [[Your Repository URL]](https://github.com/VThuong99/CustomizeChatbot)
+    git clone git@github.com:VThuong99/CustomizeChatbot.git
     cd CustomizeChatbot
     ```
 
