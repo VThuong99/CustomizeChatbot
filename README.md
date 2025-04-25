@@ -11,10 +11,10 @@ This project was built as a basic example of how to integrate the Gemini API int
 *   Pre-defined chatbot persona (Tom).
 *   **Easy customization** to change the chatbot's personality and name.
 
-## Screenshots (Optional)
+## Screenshots 
 
 ![startScreen](docs/images/img.png)
-![chatScreen](docs/images/img_1.png)
+ ![chatScreen](docs/images/img_1.png)
 
 ## Prerequisites
 
