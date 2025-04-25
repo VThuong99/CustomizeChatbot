@@ -52,7 +52,7 @@ To build and run this project, you need:
         *   The `buildFeatures { buildConfig = true }` block inside the `android { ... }` block.
         *   The `buildConfigField("String", "GEMINI_API_KEY", getLocalProperty("geminiApiKey"))` line inside both the `release { ... }` and `debug { ... }` blocks within `buildTypes`.
             *(Review the `app/build.gradle.kts` file in the code you provided; it already includes these parts)*.
-    *   ** For simpler:** U can use *hardcode*, create a variable and assign ApiKey into it. 
+    *   For simpler: U can use *hardcode*, create a variable and assign ApiKey into it. 
 
 4.  **Sync Gradle:**
     *   Click the "Sync Project with Gradle Files" icon (elephant icon) in the Android Studio toolbar or go to **File > Sync Project with Gradle Files**.
